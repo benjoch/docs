@@ -4,14 +4,7 @@
   "colors": {
     "primary": "#00A8FF",
     "light": "#00A8FF",
-    "dark": "#00A8FF",
-    "background": {
-      "dark": "#0a0a0f"
-    },
-    "anchors": {
-      "from": "#00A8FF",
-      "to": "#0070CC"
-    }
+    "dark": "#00A8FF"
   },
   "appearance": {
     "default": "dark"
