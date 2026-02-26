@@ -1,0 +1,56 @@
+---
+title: "Supported Platforms"
+description: "All platforms you can import content from"
+---
+
+Sports Index can import content from a wide range of platforms. When you paste a URL, the system automatically detects the platform and extracts the relevant metadata. Here is what gets pulled in for each one.
+
+## Platform Details
+
+| Platform       | Title | Thumbnail | Date       | Author | Embed Type     | Notes                                                        |
+| -------------- | ----- | --------- | ---------- | ------ | -------------- | ------------------------------------------------------------ |
+| **Twitter / X** | Yes  | Yes       | Yes        | Yes    | Interactive    | Date is extracted from the tweet's Snowflake ID, so it is always accurate even without API access. |
+| **YouTube**    | Yes   | Yes       | Yes        | Yes    | Playable video | Full video player embeds directly on the page.               |
+| **Instagram**  | Yes   | Yes       | No         | Yes    | Interactive    | Instagram does not provide publish dates in its embed data.  |
+| **TikTok**     | Yes   | Yes       | No         | Yes    | Video player   | Like Instagram, TikTok does not expose publish dates.        |
+| **ESPN**       | Yes   | Yes       | Yes        | Yes    | Link card      | Articles and scores render as rich link cards.               |
+| **Substack**   | Yes   | Yes       | Yes        | Yes    | Link card      | Newsletter posts with author and publication info.           |
+| **Spotify**    | Yes   | Yes       | Yes        | No     | Audio player   | Supports tracks, episodes, playlists, and albums.            |
+| **Reddit**     | Yes   | Yes       | Yes        | Yes    | Link card      | Posts and comments are supported.                            |
+| **Generic URL**| Yes   | Yes       | Sometimes  | Sometimes | Link card   | Falls back to Open Graph metadata. Quality depends on how well the site implements OG tags. |
+
+<Callout type="note">
+  "Interactive" embeds mean the full platform widget renders on the page -- visitors can like, reply, or interact with the content without leaving Sports Index. "Link card" embeds show a rich preview card that links out to the original content.
+</Callout>
+
+## What Gets Extracted
+
+When you import a URL, Sports Index pulls the following fields (when available):
+
+- **Title** -- The headline or post text.
+- **Thumbnail** -- A preview image. For videos, this is usually a frame from the video. For articles, it is the Open Graph image.
+- **Date** -- The publish date. Used to place the item correctly on your timeline.
+- **Author** -- The creator or publisher name.
+- **Platform** -- Automatically detected from the URL.
+- **Embed HTML** -- The embed code needed to render the content inline on your page.
+
+## Date Resolution
+
+Getting the right date matters because it determines where content appears on your timeline. Here is how Sports Index handles dates across platforms:
+
+<Accordion title="How dates are resolved">
+  - **Twitter / X** -- Dates are extracted from the tweet's Snowflake ID, a unique identifier that encodes the exact creation timestamp. This works without any API access.
+  - **YouTube, ESPN, Substack, Spotify, Reddit** -- Dates come directly from the platform's metadata or API response.
+  - **Instagram, TikTok** -- These platforms do not expose publish dates in their public embed data. Content from these platforms will appear in your library without a date unless you manually set one.
+  - **Generic URLs** -- Dates are extracted from Open Graph metadata when available. If the site does not include a date tag, the import date is used instead.
+</Accordion>
+
+## Tips
+
+<Callout type="tip">
+  If a URL does not import the way you expect, make sure it is publicly accessible. Private or restricted content cannot be resolved. Also check that you are pasting the full URL, including the `https://` prefix.
+</Callout>
+
+- **Short URLs work** -- You can paste shortened URLs (like `youtu.be` or `t.co` links) and Sports Index will follow the redirect to the full URL.
+- **Playlist and channel URLs** -- These are not supported for bulk import. Paste individual video or post URLs instead.
+- **Paywalled content** -- If the content is behind a paywall, Sports Index can usually still extract the title and thumbnail from public metadata, but the embed may not render for visitors who do not have access.

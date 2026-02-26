@@ -1,122 +1,129 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Sports Index",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#00A8FF",
+    "dark": "#00A8FF"
   },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+  "appearance": {
+    "default": "dark"
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
+  "favicon": "/favicon.svg",
   "navbar": {
     "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
+      { "label": "Sports Index", "href": "https://sportsindex.app" }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get Started",
+      "href": "https://sportsindex.app/signup"
     }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/sportsindex",
+      "website": "https://sportsindex.app"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "User Guide",
+        "icon": "book-open",
+        "pages": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "guide/introduction",
+              "guide/create-account",
+              "guide/quick-start"
+            ]
+          },
+          {
+            "group": "Portfolio Pages",
+            "icon": "user",
+            "pages": [
+              "guide/portfolio/overview",
+              "guide/portfolio/profile-settings",
+              "guide/portfolio/importing-content",
+              "guide/portfolio/library",
+              "guide/portfolio/timelines",
+              "guide/portfolio/collections"
+            ]
+          },
+          {
+            "group": "Topic Pages",
+            "icon": "hashtag",
+            "pages": [
+              "guide/topics/overview",
+              "guide/topics/claiming",
+              "guide/topics/custom-tabs",
+              "guide/topics/community",
+              "guide/topics/managing-content"
+            ]
+          },
+          {
+            "group": "Collection Editor",
+            "icon": "grid-2",
+            "pages": [
+              "guide/editor/overview",
+              "guide/editor/block-types",
+              "guide/editor/templates",
+              "guide/editor/embeds-media",
+              "guide/editor/stats-charts"
+            ]
+          },
+          {
+            "group": "Help",
+            "icon": "circle-question",
+            "pages": [
+              "guide/help/faq",
+              "guide/help/supported-platforms",
+              "guide/help/troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developer Docs",
+        "icon": "code",
+        "pages": [
+          {
+            "group": "Overview",
+            "pages": [
+              "dev/introduction",
+              "dev/tech-stack"
+            ]
+          },
+          {
+            "group": "Architecture",
+            "pages": [
+              "dev/architecture/tag-system",
+              "dev/architecture/date-resolution",
+              "dev/architecture/timeline-chunks",
+              "dev/architecture/block-system"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "dev/api/authentication",
+              "dev/api/content-posts",
+              "dev/api/topics",
+              "dev/api/media",
+              "dev/api/library"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "search": {
+    "prompt": "Search Sports Index docs..."
   }
 }

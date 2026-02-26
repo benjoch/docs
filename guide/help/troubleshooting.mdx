@@ -1,0 +1,107 @@
+---
+title: "Troubleshooting"
+description: "Solutions to common issues"
+---
+
+Running into a problem? This page covers the most common issues and how to fix them.
+
+## Embeds Not Loading
+
+If an embedded post, video, or link card is not rendering on your collection or page:
+
+<Steps>
+  <Step title="Refresh the page">
+    Embeds load asynchronously from their source platforms. A simple page refresh often resolves the issue, especially if the embed was recently added.
+  </Step>
+  <Step title="Check the original URL">
+    Make sure the original content is still publicly available. If the tweet was deleted, the Instagram post was made private, or the YouTube video was taken down, the embed will not render.
+  </Step>
+  <Step title="Try a different browser">
+    Some browser extensions (especially ad blockers and privacy tools) can interfere with third-party embeds. Try loading the page in an incognito/private window or a different browser to rule this out.
+  </Step>
+  <Step title="Re-add the embed">
+    If the embed still will not load, delete the block and add it again with a fresh URL paste. Occasionally the embed data from the original import can become stale.
+  </Step>
+</Steps>
+
+<Callout type="note">
+  Twitter/X embeds in particular can be slow to load on first visit due to how Twitter serves its embed scripts. Give them a few seconds before assuming something is broken.
+</Callout>
+
+## Import Failures
+
+When a URL does not import correctly or fails entirely:
+
+- **Check the URL** -- Make sure you are pasting the full URL including `https://`. Partial URLs or URLs with tracking parameters stripped out may not resolve correctly.
+- **Private content** -- Sports Index cannot import content that requires login or is restricted. The URL must be publicly accessible.
+- **Unsupported format** -- Some URL types are not supported, like playlist pages, channel homepages, or search result pages. Paste a direct link to a specific post, video, or article instead.
+- **Rate limiting** -- If you are importing many URLs in a short time, some platforms may temporarily throttle requests. Wait a minute and try again.
+
+<Callout type="tip">
+  If a URL imports but is missing metadata (no thumbnail, no title, or wrong date), you can edit the item in your library to fill in or correct the details manually.
+</Callout>
+
+## Image Upload Issues
+
+If your image upload is failing:
+
+| Problem                        | Solution                                                                           |
+| ------------------------------ | ---------------------------------------------------------------------------------- |
+| Upload rejected                | Check the file size. The maximum is **5 MB**. Compress the image or reduce its dimensions. |
+| Wrong format                   | Supported formats are JPG, PNG, GIF, and WebP. Convert other formats before uploading. |
+| Image appears but looks blurry | The image may have been too small for the block size. Use a higher-resolution source image. |
+| Upload hangs or times out      | Check your internet connection. Large files on slow connections can time out. Try a smaller file. |
+
+## Account and Password Issues
+
+<Accordion title="I forgot my password">
+  Go to the login page and click **Forgot Password**. Enter your email address and you will receive a reset link. Check your spam folder if it does not arrive within a few minutes.
+</Accordion>
+
+<Accordion title="My password is not accepted when signing up">
+  Passwords must meet these requirements:
+  - At least **8 characters** long
+  - At least one **uppercase** letter
+  - At least one **lowercase** letter
+  - At least one **number**
+
+  If you are still having trouble, try a longer password. Special characters are allowed but not required.
+</Accordion>
+
+<Accordion title="I cannot log in even with the right password">
+  Try these steps in order:
+  1. Clear your browser cookies for sportsindex.app and try again.
+  2. Try an incognito/private browsing window.
+  3. Make sure you are using the email address you signed up with (not a username).
+  4. If none of these work, use the password reset flow to set a new password.
+</Accordion>
+
+## Content Not Appearing on a Topic Page
+
+If you have imported content but it is not showing up on a topic page:
+
+- **Check the tags** -- Content appears on topic pages based on tags. Make sure the imported item is tagged with the correct athlete, team, or league. You can edit tags in your library.
+- **Processing delay** -- Newly imported content may take a moment to appear on topic pages. Refresh the page after a few seconds.
+- **Moderation** -- If the topic page has an admin (a claimed page), they may need to approve community contributions before they appear.
+
+## Browser Compatibility
+
+Sports Index works best in modern browsers:
+
+| Browser           | Supported |
+| ----------------- | --------- |
+| Chrome 90+        | Yes       |
+| Firefox 90+       | Yes       |
+| Safari 15+        | Yes       |
+| Edge 90+          | Yes       |
+| Mobile Safari     | Yes       |
+| Chrome for Android| Yes       |
+| Internet Explorer | No        |
+
+<Callout type="warning">
+  If you are using an older browser and experiencing layout issues or broken features, try updating to the latest version. The collection editor in particular relies on modern browser features for drag-and-drop and canvas rendering.
+</Callout>
+
+## Still Stuck?
+
+If none of the above solutions solve your problem, reach out to us on [X/Twitter](https://x.com/sportsindex). Include a description of the issue, the URL you were working with (if applicable), and what browser you are using. We will get back to you as quickly as we can.
