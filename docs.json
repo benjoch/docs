@@ -16,18 +16,18 @@
   "favicon": "/favicon.png",
   "navbar": {
     "links": [
-      { "label": "Sports Index", "href": "https://sportsindex.app" }
+      { "label": "Sports Index", "href": "https://sportsindex.io" }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://sportsindex.app/signup"
+      "href": "https://sportsindex.io/signup"
     }
   },
   "footer": {
     "socials": {
       "x": "https://x.com/sportsindexapp",
-      "website": "https://sportsindex.app"
+      "website": "https://sportsindex.io"
     }
   },
   "navigation": {
