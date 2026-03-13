@@ -1,6 +1,43 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Block System"
+description: "Collection editor block architecture"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+The collection editor uses a 3-column block layout system with 24 block types. Collections are built from a canvas of positioned elements that can be arranged, resized, and styled.
+
+## Layout
+
+- **Canvas width**: 1336px
+- **Column width**: 437px (3 columns)
+- **Column gap**: 24px
+- **Grid size**: 20px
+
+## Block Types (24)
+
+| Category | Types |
+|----------|-------|
+| **General** | heading, text_box, divider |
+| **Athlete** | athlete_header, athlete_bio |
+| **Content** | news |
+| **Article** | article_header, rich_text, pull_quote |
+| **Media** | image, post, post_gallery |
+| **Stats & Data** | stats_header, season_stats, bar_chart, head_to_head, scatter_plot, spider_chart |
+| **Team** | roster |
+| **Pickleball** | pickleball_results, pb_match_group |
+
+## Content Types
+
+Blocks store content as JSON in the `content` field of `PageElement` records. Each block type defines its own content schema. For example:
+
+- **post**: `{ linked_post_id, platform, external_url, title, thumbnail_url }`
+- **image**: `{ url, alt, caption }`
+- **heading**: `{ text, level }`
+- **bar_chart**: `{ title, data, config }`
+
+## Rendering
+
+Collections are rendered in two contexts:
+1. **Editor** (`UnifiedCollectionEditor.js`): Full drag-drop editing with double-click content editing
+2. **Viewer** (`collection-block-renderer.js`): Read-only rendering for published collections

@@ -121,6 +121,10 @@
               "dev/api/authentication",
               "dev/api/content-posts",
               "dev/api/topics",
+              "dev/api/explore",
+              "dev/api/profiles",
+              "dev/api/stats",
+              "dev/api/leaderboard",
               "dev/api/media",
               "dev/api/library"
             ]

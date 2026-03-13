@@ -1,6 +1,52 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Tag System"
+description: "How topics and tags work across the platform"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+The topic tagging system manages how posts are associated with topics (tags) and how those associations are queried. There are two distinct tag storage systems with different semantics.
+
+## Two Post Types, Two Tag Systems
+
+| Post Type | Identifier | Tag Source | Behavior |
+|-----------|------------|------------|----------|
+| **Owned posts** | `created_by IS NOT NULL` | `content_post_tags` | Owner's tags are permanent |
+| **Canonical posts** | `created_by IS NULL` | `topic_post_index` | Tags exist while users maintain them |
+
+**Canonical posts** are external media (tweets, YouTube videos, articles) that exist independently. Multiple users can tag the same canonical post.
+
+## Tag Storage Tables
+
+| Table | Purpose | Cleanup |
+|-------|---------|---------|
+| `content_post_tags` | Permanent tags on owned posts | Never cleaned up |
+| `topic_post_index` | Active tags from user curation | Row deleted when `association_count` reaches 0 |
+| `post_tag_associations` | User attribution (who tagged what) | Tracks individual actions |
+
+## Tag Facets
+
+Tags can have metadata facets for filtered discovery:
+
+- **Sport**: e.g., "Pickleball", "Football"
+- **Level**: e.g., "Professional", "Collegiate"
+
+These enable endpoints like `GET /api/explore/sport/{sport_name}/topics` to filter topics by sport.
+
+## Tag Groups
+
+Tags can be organized into hierarchical groups using an adjacency list model. Groups have:
+- A `parent_id` for tree structure (e.g., league → team)
+- `display_order` for sibling ordering
+- Members linked via `TagGroupMember`
+
+## Topic Relationships
+
+Directed relationships between tags model real-world connections:
+
+```
+Ben Johns --plays_for--> Jacksonville Jaguars (PPA)
+Ben Johns --competes_in--> PPA Tour
+```
+
+Used for grouping topics on explore pages (e.g., showing players grouped by team).

@@ -1,6 +1,44 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Date Resolution"
+description: "How display dates are resolved across contexts"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+The date system resolves a meaningful display date for every content post. External content shows its actual content date (e.g., a 2022 tweet imported in 2025 shows 2022), not its import date.
+
+## Date Fields
+
+| Field | Table | Description |
+|-------|-------|-------------|
+| `event_datetime` | `content_posts` | Canonical content date (from platform data or first user override) |
+| `created_at` | `content_posts` | DB insertion timestamp (fallback) |
+| `display_date` | `user_post_relationships` | Per-user date override |
+
+## Resolution Priority
+
+**User-specific contexts (portfolio, library):**
+1. `UserPostRelationship.display_date` (user override)
+2. `ContentPost.event_datetime` (platform/crowdsourced date)
+3. `ContentPost.created_at` (import date)
+
+**User-agnostic contexts (topic pages, explore, feeds):**
+1. `ContentPost.event_datetime`
+2. `ContentPost.created_at`
+
+## How event_datetime Gets Populated
+
+| Scenario | Timing | Action |
+|----------|--------|--------|
+| Canonical post with `embed_data.created_at` | At import | Parsed and set automatically |
+| User sets date on canonical post (no existing date) | User action | First override seeds `event_datetime` |
+| User sets date on owned post | User action | Written to both relationship and post |
+
+## Platform Date Availability
+
+| Platform | Date Available | Method |
+|----------|---------------|--------|
+| Twitter/X | Yes | Snowflake ID bit-shift |
+| YouTube | Yes | JSON-LD `uploadDate` |
+| TikTok | No | oEmbed doesn't provide date |
+| Instagram | No | oEmbed doesn't provide date |

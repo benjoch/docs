@@ -1,0 +1,167 @@
+---
+title: "Stats & Data"
+description: "Player statistics, match history, head-to-head records, and tournaments"
+---
+
+## Overview
+
+The stats API provides structured sports data — currently focused on pickleball. Endpoints cover player career stats, yearly breakdowns, head-to-head records, match logs, and tournament brackets. All stats endpoints are public.
+
+---
+
+## Player Stats
+
+### Career Stats
+
+```
+GET /api/stats/player/{tag_id}/career
+```
+
+Returns lifetime career statistics for a player.
+
+---
+
+### Yearly Stats
+
+```
+GET /api/stats/player/{tag_id}/yearly
+```
+
+Returns statistics broken down by year.
+
+---
+
+### Head-to-Head
+
+```
+GET /api/stats/player/{tag_id}/h2h
+```
+
+Returns head-to-head records against other players.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `opponent_tag_id` | string | Specific opponent (optional — returns all opponents if omitted) |
+
+---
+
+### Partner Stats
+
+```
+GET /api/stats/player/{tag_id}/partners
+```
+
+Returns doubles partner statistics and win rates.
+
+---
+
+### Match History
+
+```
+GET /api/stats/player/{tag_id}/matches
+```
+
+Returns a paginated match log.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Results per page |
+| `offset` | integer | Pagination offset |
+| `year` | integer | Filter by year |
+| `format` | string | `singles` or `doubles` |
+| `tournament_id` | string | Filter by tournament |
+
+---
+
+## Leaderboard
+
+### Player Rankings
+
+```
+GET /api/stats/leaderboard
+```
+
+Returns ranked players.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Results per page |
+| `offset` | integer | Pagination offset |
+| `format` | string | `overall`, `singles`, or `doubles` |
+
+---
+
+## Gold Views (Materialized Data)
+
+### Available Views
+
+```
+GET /api/stats/gold-views
+```
+
+Returns a catalog of available materialized views (pre-computed data tables).
+
+---
+
+### Query Gold View
+
+```
+GET /api/stats/gold-query
+```
+
+Query a specific materialized view. Returns structured tabular data.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `view` | string | View name (required) |
+| `tag_id` | string | Filter by player |
+| `tournament_id` | string | Filter by tournament |
+| `format` | string | Match format filter |
+| `year` | integer | Year filter |
+| `limit` | integer | Max rows |
+
+**Response:**
+```json
+{
+  "columns": ["player", "wins", "losses", "win_pct"],
+  "rows": [
+    ["Ben Johns", 142, 12, 0.922],
+    ["Tyson McGuffin", 98, 28, 0.778]
+  ]
+}
+```
+
+---
+
+## Tournaments
+
+### Search Tournaments
+
+```
+GET /api/stats/tournaments?q={query}
+```
+
+Search tournaments by name.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `q` | string | Search query |
+| `limit` | integer | Max results |
+
+---
+
+### Tournament Bracket
+
+```
+GET /api/stats/tournament/{tournament_id}
+```
+
+Returns the full tournament bracket with all matches.

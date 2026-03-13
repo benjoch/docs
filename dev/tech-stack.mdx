@@ -1,6 +1,60 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Tech Stack"
+description: "Technologies powering the Sports Index platform"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Backend
+
+| Technology | Purpose |
+|-----------|---------|
+| **Python 3.13** | Primary language |
+| **FastAPI** | Web framework and API routing |
+| **SQLAlchemy** | ORM and database models |
+| **PostgreSQL** | Primary database |
+| **pgvector** | Semantic embeddings and similarity search |
+| **SendGrid** | Transactional email delivery |
+| **OpenAI** | Text embeddings (`text-embedding-3-small`) |
+| **S3 / Cloudflare R2** | Media file storage |
+| **Pillow** | Image optimization and processing |
+| **FFmpeg** | GIF-to-video conversion |
+
+## Frontend
+
+| Technology | Purpose |
+|-----------|---------|
+| **Vanilla JavaScript** | No framework — lightweight, fast loading |
+| **Jinja2** | Server-side HTML templating |
+| **CSS Custom Properties** | Theming and dark mode |
+| **ES6 Modules** | Component architecture for editors |
+
+## Infrastructure
+
+| Technology | Purpose |
+|-----------|---------|
+| **Railway** | Hosting and deployment |
+| **Docker** | Containerization |
+| **Mintlify** | Documentation site |
+
+## Architecture Overview
+
+Sports Index follows a layered architecture:
+
+```
+Frontend (Vanilla JS + Jinja2 Templates)
+    ↓ HTTP/JSON
+Routes / API Layer (FastAPI, ~120 endpoints)
+    ↓ Function calls
+Service Layer (8 services + 7 post type handlers)
+    ↓ Function calls
+Data Access Layer (28 repository singletons)
+    ↓ ORM/SQL
+PostgreSQL + pgvector
+```
+
+### Key Patterns
+
+- **Post Type Handlers**: Abstract base class pattern for 7 content types (external_media, chart, data_table, uploaded_media, timeline, page, collection)
+- **Canonical Deduplication**: External URLs stored once globally, users link via relationships
+- **Dual Tagging**: Owned posts use `content_post_tags`, canonical posts use `topic_post_index`
+- **Denormalized Caches**: `TopicPostIndex`, `TopicTimelineCache`, `UserLibraryCache` for fast reads
+- **Feature-Flagged Embeddings**: Semantic search gated behind `EMBEDDING_ENABLED`

@@ -1,6 +1,203 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Authentication"
+description: "User registration, login, and token management"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+Sports Index uses JWT-based authentication with HttpOnly cookies. Tokens are issued on login/signup and sent automatically via cookies or manually via `Authorization: Bearer {token}` headers.
+
+## Authentication Methods
+
+| Method | Header/Cookie | Use Case |
+|--------|--------------|----------|
+| **Bearer token** | `Authorization: Bearer {token}` | API clients, mobile apps |
+| **HttpOnly cookie** | `access_token` (set automatically) | Browser sessions |
+| **Logged-in flag** | `logged_in` cookie (non-HttpOnly) | Frontend JS auth state checks |
+
+## Rate Limits
+
+| Endpoint | Limit |
+|----------|-------|
+| `/api/auth/signup` | 3/minute |
+| `/api/auth/login` | 5/minute |
+| `/api/auth/forgot-password` | 3/minute |
+| `/api/auth/reset-password` | 5/minute |
+| `/api/auth/resend-verification` | 2/minute |
+
+---
+
+## Endpoints
+
+### Create Account
+
+```
+POST /api/auth/signup
+```
+
+**Body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | User email address |
+| `username` | string | Yes | Unique username |
+| `password` | string | Yes | Account password |
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "username": "johndoe"
+}
+```
+
+---
+
+### Login
+
+```
+POST /api/auth/login
+```
+
+**Body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | User email |
+| `password` | string | Yes | Account password |
+| `remember_me` | boolean | No | Extend token expiry |
+
+**Response:**
+```json
+{
+  "access_token": "eyJ...",
+  "token_type": "bearer",
+  "user": {
+    "id": "uuid",
+    "email": "user@example.com",
+    "username": "johndoe"
+  }
+}
+```
+
+Sets `access_token` (HttpOnly) and `logged_in` cookies automatically.
+
+---
+
+### Logout
+
+```
+POST /api/auth/logout
+```
+
+<Note>Requires authentication.</Note>
+
+Clears the `access_token` and `logged_in` cookies.
+
+---
+
+### Get Current User
+
+```
+GET /api/auth/me
+```
+
+<Note>Requires authentication.</Note>
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "username": "johndoe",
+  "is_verified": true,
+  "is_admin": false,
+  "avatar_url": "https://...",
+  "primary_topic_name": "pickleball"
+}
+```
+
+---
+
+### Verify Email
+
+```
+GET /api/auth/verify-email?token={token}
+```
+
+Verifies the user's email address using the token sent via email.
+
+---
+
+### Resend Verification Email
+
+```
+POST /api/auth/resend-verification
+```
+
+**Body:**
+
+| Field | Type | Required |
+|-------|------|----------|
+| `email` | string | Yes |
+
+---
+
+### Forgot Password
+
+```
+POST /api/auth/forgot-password
+```
+
+**Body:**
+
+| Field | Type | Required |
+|-------|------|----------|
+| `email` | string | Yes |
+
+Sends a password reset email if the account exists. Always returns success to prevent email enumeration.
+
+---
+
+### Reset Password
+
+```
+POST /api/auth/reset-password
+```
+
+**Body:**
+
+| Field | Type | Required |
+|-------|------|----------|
+| `token` | string | Yes |
+| `password` | string | Yes |
+
+---
+
+### Claim Seed Account
+
+```
+POST /api/auth/claim
+```
+
+Claims a pre-created seed account (used for onboarding creators).
+
+**Body:**
+
+| Field | Type | Required |
+|-------|------|----------|
+| `claim_token` | string | Yes |
+| `email` | string | Yes |
+| `password` | string | Yes |
+
+**Response:**
+```json
+{
+  "access_token": "eyJ...",
+  "user": {
+    "id": "uuid",
+    "username": "creator_name"
+  }
+}
+```

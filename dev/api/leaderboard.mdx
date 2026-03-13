@@ -1,0 +1,80 @@
+---
+title: "Leaderboard"
+description: "Creator, topic, and post rankings"
+---
+
+## Overview
+
+The leaderboard API ranks creators, topics, and posts by engagement metrics. All endpoints are public. Rankings can be filtered by time period and topic.
+
+---
+
+## Endpoints
+
+### Creator Leaderboard
+
+```
+GET /api/leaderboard/
+```
+
+Returns creators ranked by engagement score.
+
+**Query Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `period` | string | `all` | `all`, `month`, `week`, or `today` |
+| `sort` | string | `score` | `score`, `posts`, or `contributions` |
+| `topic` | string | — | Filter by topic name |
+| `page` | integer | 1 | Page number |
+| `page_size` | integer | 20 | Results per page |
+
+---
+
+### Topic Leaderboard
+
+```
+GET /api/leaderboard/topics
+```
+
+Returns topics ranked by activity.
+
+**Query Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `period` | string | `all` | `all`, `month`, `week`, or `today` |
+| `sort` | string | `posts` | `posts` or `contributors` |
+| `parent_topic` | string | — | Filter by parent topic |
+| `page` | integer | 1 | Page number |
+| `page_size` | integer | 20 | Results per page |
+
+---
+
+### Post Leaderboard
+
+```
+GET /api/leaderboard/posts
+```
+
+Returns posts ranked by views or shares.
+
+**Query Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `period` | string | `all` | `all`, `month`, `week`, or `today` |
+| `sort` | string | `views` | `views` or `shares` |
+| `topic` | string | — | Filter by topic name |
+| `page` | integer | 1 | Page number |
+| `page_size` | integer | 20 | Results per page |
+
+---
+
+### Platform Stats
+
+```
+GET /api/leaderboard/stats
+```
+
+Returns aggregate platform-wide statistics (total posts, creators, views, etc.).

@@ -1,6 +1,220 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Content & Posts"
+description: "Reading, searching, and browsing content posts"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+Content posts are the core data type in Sports Index. Posts can be external media (tweets, YouTube videos), uploaded media, charts, data tables, timelines, pages, or collections. Most read endpoints are public with optional authentication for personalized data.
+
+## Post Types
+
+| Type | Description |
+|------|-------------|
+| `external_media` | Embedded content from Twitter, YouTube, Instagram, TikTok, etc. |
+| `uploaded_media` | User-uploaded images and videos |
+| `chart` | Data visualizations (bar charts, scatter plots, etc.) |
+| `data_table` | Structured tabular data |
+| `timeline` | Ordered sequences of posts with dates |
+| `page` | Rich page layouts (deprecated in favor of collections) |
+| `collection` | Block-based page layouts with the collection editor |
+
+---
+
+## Endpoints
+
+### Get Post by Slug
+
+```
+GET /api/posts/by-slug/{slug}
+```
+
+Returns the full post with content. Increments the view counter.
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "slug": "my-collection-abc123",
+  "post_type": "collection",
+  "title": "My Collection",
+  "description": "A sports analysis piece",
+  "created_by": "uuid",
+  "creator_username": "johndoe",
+  "visibility": "public",
+  "event_datetime": "2026-01-15T00:00:00Z",
+  "content": { },
+  "tags": ["pickleball", "ppa-tour"],
+  "view_count": 142,
+  "share_count": 8
+}
+```
+
+---
+
+### Get Post by ID
+
+```
+GET /api/posts/by-id/{post_id}
+```
+
+Same as by-slug but uses the post UUID.
+
+---
+
+### Get Post Header
+
+```
+GET /api/posts/header/{slug}
+```
+
+Lightweight endpoint returning post metadata without full content. Useful for link previews and cards.
+
+---
+
+### Content Feed
+
+```
+GET /api/posts/feed
+```
+
+Returns a paginated content feed with filtering.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `types` | string | Comma-separated post types to include |
+| `topic` | string | Filter by topic name |
+| `topic_id` | string | Filter by topic ID |
+| `tags` | string | Filter by tags |
+| `user_id` | string | Filter by creator |
+| `dated` | boolean | Only posts with dates |
+| `include_uploads` | boolean | Include uploaded media |
+| `sort` | string | Sort field |
+| `order` | string | `asc` or `desc` |
+| `limit` | integer | Results per page (default: 20) |
+| `offset` | integer | Pagination offset |
+
+**Response:**
+```json
+{
+  "posts": [ ],
+  "total_count": 156,
+  "has_more": true
+}
+```
+
+---
+
+### Search Posts
+
+```
+GET /api/posts/search
+```
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `q` | string | Search query (required) |
+| `types` | string | Filter by post types |
+| `author` | string | Filter by author username |
+| `platform` | string | Filter by platform (twitter, youtube, etc.) |
+| `topics` | string | Filter by topics |
+| `limit` | integer | Max results |
+
+---
+
+### Unified Search
+
+```
+GET /api/posts/unified-search
+```
+
+Searches across posts, topics, and user profiles simultaneously.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `q` | string | Search query (required) |
+| `limit` | integer | Max results per category |
+| `semantic` | boolean | Enable semantic/embedding search |
+
+**Response:**
+```json
+{
+  "indexes": [ ],
+  "topics": [ ],
+  "profiles": [ ],
+  "match_type": "semantic"
+}
+```
+
+---
+
+### Resolve URL
+
+```
+GET /api/posts/resolve?url={url}
+```
+
+Resolves an external URL to get embed metadata (platform, title, thumbnail, author). Useful for previewing links before saving.
+
+---
+
+### Get Post Templates
+
+```
+GET /api/posts/templates
+```
+
+Returns available public collection templates.
+
+**Response:**
+```json
+[
+  {
+    "id": "uuid",
+    "title": "Player Profile",
+    "description": "Standard athlete profile layout",
+    "tags": ["athlete"]
+  }
+]
+```
+
+---
+
+### Posts by User
+
+```
+GET /api/posts/by-user/{username}
+```
+
+Get all public posts created by a specific user.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `types` | string | Filter by post types |
+| `limit` | integer | Results per page |
+| `offset` | integer | Pagination offset |
+
+---
+
+### Bookmarks
+
+```
+GET /api/posts/bookmarks
+```
+
+<Note>Requires authentication.</Note>
+
+Returns the current user's bookmarked posts.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Results per page |
+| `offset` | integer | Pagination offset |

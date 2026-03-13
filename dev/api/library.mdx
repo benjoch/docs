@@ -1,6 +1,143 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Library"
+description: "Content library, URL resolution, and item management"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+The library is where users store and manage their content before publishing. Items can be external links (resolved via URL), uploaded media, or data tables. The library supports bulk saving, publishing to topics, and visibility management.
+
+---
+
+## Public Endpoints
+
+### Resolve URL
+
+```
+GET /api/library/resolve-url-public?url={url}
+```
+
+Resolves an external URL to extract embed metadata. No authentication required — used by the collection editor for link previews.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | string | URL to resolve (required) |
+
+**Response:**
+```json
+{
+  "platform": "twitter",
+  "external_id": "1234567890",
+  "title": "Tweet by @player",
+  "author": "player",
+  "provider_name": "Twitter",
+  "thumbnail_url": "https://...",
+  "embed_html": "<blockquote>...</blockquote>"
+}
+```
+
+**Supported Platforms:**
+
+| Platform | URL Patterns |
+|----------|-------------|
+| Twitter/X | `twitter.com`, `x.com` |
+| YouTube | `youtube.com`, `youtu.be` |
+| Instagram | `instagram.com` |
+| TikTok | `tiktok.com` |
+| ESPN | `espn.com` |
+| Substack | `*.substack.com` |
+| Generic | Any other URL (extracts Open Graph data) |
+
+---
+
+## Authenticated Endpoints
+
+### List Library Items
+
+```
+GET /api/library/items
+```
+
+<Note>Requires authentication.</Note>
+
+Returns the current user's library items with pagination.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `item_type` | string | Filter by type (`external_media`, `uploaded_media`, `data_table`) |
+| `offset` | integer | Pagination offset |
+| `limit` | integer | Results per page |
+| `visibility` | string | Filter by visibility |
+
+---
+
+### Save Items
+
+```
+POST /api/library/save
+```
+
+<Note>Requires authentication.</Note>
+
+Bulk save items to the library.
+
+**Body:**
+```json
+{
+  "external_links": [
+    { "url": "https://x.com/player/status/123" }
+  ],
+  "uploaded_media": [
+    { "url": "https://storage.example.com/uploads/img.webp", "title": "Match photo" }
+  ],
+  "data_tables": [
+    { "title": "Season Stats", "columns": [...], "rows": [...] }
+  ]
+}
+```
+
+---
+
+### Publish Item
+
+```
+POST /api/library/{post_id}/publish
+```
+
+<Note>Requires authentication.</Note>
+
+Publishes a library item, making it publicly visible. Optionally tag it to topics.
+
+**Body:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tags` | array | Topic names to tag the post to |
+
+---
+
+### Update Item
+
+```
+PUT /api/library/{post_id}
+```
+
+<Note>Requires authentication.</Note>
+
+Update a library item's metadata (title, description, date, etc.).
+
+---
+
+### Delete Item
+
+```
+DELETE /api/library/{post_id}
+```
+
+<Note>Requires authentication.</Note>
+
+Remove an item from the library.

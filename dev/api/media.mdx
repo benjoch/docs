@@ -1,6 +1,104 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Media"
+description: "File uploads, image optimization, and storage proxy"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+The media API handles file uploads with automatic optimization (resizing, format conversion, responsive `srcset` generation). Uploaded files are stored in S3-compatible storage (Cloudflare R2) and served via a storage proxy endpoint.
+
+---
+
+## Public Endpoints
+
+### Media Capabilities
+
+```
+GET /api/media/capabilities
+```
+
+Returns supported formats, size limits, and available optimizations.
+
+---
+
+### Storage Proxy
+
+```
+GET /api/media/storage/{folder}/{filename}
+```
+
+Serves uploaded files from storage. This is the public URL format for all uploaded media.
+
+---
+
+### Placeholder Image
+
+```
+GET /api/media/placeholder?width=400&height=300
+```
+
+Returns a generated placeholder image.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `width` | integer | Image width in pixels |
+| `height` | integer | Image height in pixels |
+| `format` | string | Image format |
+
+---
+
+## Authenticated Endpoints
+
+### Upload File
+
+```
+POST /api/media/upload
+```
+
+<Note>Requires authentication.</Note>
+
+Upload a media file with optional optimization.
+
+**Query Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `optimize` | boolean | true | Apply image optimization |
+| `generate_responsive` | boolean | false | Generate responsive `srcset` variants |
+| `convert_gif` | boolean | false | Convert GIF to video (MP4) |
+
+**Request:** Multipart form data with file field.
+
+**Response:**
+```json
+{
+  "url": "https://storage.example.com/uploads/abc123.webp",
+  "thumbnail_url": "https://storage.example.com/uploads/abc123_thumb.webp",
+  "srcset": "...400w, ...800w, ...1200w",
+  "hash": "sha256:...",
+  "size_bytes": 245000,
+  "width": 1200,
+  "height": 800,
+  "format": "webp"
+}
+```
+
+---
+
+### Validate File
+
+```
+POST /api/media/validate
+```
+
+<Note>Requires authentication.</Note>
+
+Validate a file before uploading (check format, size limits).
+
+**Response:**
+```json
+{
+  "valid": true,
+  "size_mb": 2.4
+}
+```

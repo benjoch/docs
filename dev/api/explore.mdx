@@ -1,0 +1,190 @@
+---
+title: "Explore & Discovery"
+description: "Featured content, trending topics, sport browsing, and platform stats"
+---
+
+## Overview
+
+The explore API powers the discovery experience — featured content, trending topics, sport/league browsing, creator leaderboards, and platform-wide statistics. All endpoints are public with no authentication required.
+
+---
+
+## Endpoints
+
+### Filter Options
+
+```
+GET /api/explore/filter-options
+```
+
+Returns topics ranked by post count for the discovery filter bar.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `include_images` | boolean | Include hero images for each topic |
+
+---
+
+### Featured Topic
+
+```
+GET /api/explore/featured-topic
+```
+
+Returns the current featured topic for the homepage hero section.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `topics` | string | Comma-separated topic names to filter |
+
+---
+
+### Featured Post
+
+```
+GET /api/explore/featured-post
+```
+
+Returns the single best-performing post, optionally filtered by topic.
+
+---
+
+### Featured Page
+
+```
+GET /api/explore/featured-page
+```
+
+Returns the currently featured collection/page for homepage display.
+
+---
+
+### Explore Timeline
+
+```
+GET /api/explore/timeline
+```
+
+Returns posts sorted by effective date for the explore feed.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `topics` | string | Filter by topics |
+| `types` | string | Filter by post types |
+| `limit` | integer | Results per page |
+| `offset` | integer | Pagination offset |
+
+---
+
+### Creator Leaderboard
+
+```
+GET /api/explore/creator-leaderboard
+```
+
+Returns top creators ranked by activity and influence.
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Number of creators |
+| `offset` | integer | Pagination offset |
+
+---
+
+### Rising Creators
+
+```
+GET /api/explore/rising-creators
+```
+
+Returns creators with the fastest-growing influence scores.
+
+---
+
+### Platform Stats
+
+```
+GET /api/explore/platform-stats
+```
+
+Returns aggregate platform statistics.
+
+**Response:**
+```json
+{
+  "total_views": 125000,
+  "total_shares": 8500,
+  "total_creators": 340,
+  "total_posts": 12000
+}
+```
+
+---
+
+## Sport & League Browsing
+
+### List Sports
+
+```
+GET /api/explore/sports
+```
+
+Returns all available sports.
+
+---
+
+### Topics by Sport
+
+```
+GET /api/explore/sport/{sport_name}/topics
+```
+
+Returns topics within a specific sport, filtered by the sport facet on tags.
+
+---
+
+### Grouped Topics by Sport
+
+```
+GET /api/explore/sport/{sport_name}/groups-v2
+```
+
+Returns topics organized by their tag groups (e.g., league → teams → players).
+
+---
+
+### List Leagues
+
+```
+GET /api/explore/leagues
+```
+
+Returns available leagues across all sports.
+
+---
+
+### Browse Leagues
+
+```
+GET /api/explore/browse-leagues
+```
+
+Returns a hierarchical view: Sports → Leagues → Topics.
+
+---
+
+### Leaderboard Views
+
+```
+GET /api/explore/creator-leaderboard-views
+```
+
+Returns available leaderboard view configurations.

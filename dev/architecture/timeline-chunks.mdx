@@ -1,6 +1,50 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Timeline Chunks"
+description: "Time-based chunk loading for scalable timeline rendering"
 ---
 
-This documentation is coming soon. Check back later for updates.
+## Overview
+
+Topic pages display potentially thousands of posts in chronological order. Instead of loading all posts at once, the system uses a chunk-based loading strategy that fetches posts in time-range batches.
+
+## How It Works
+
+1. **Legend request**: Client fetches `GET /api/topics/{name}/posts/legend` which returns year/month buckets with post counts
+2. **Initial load**: Client requests the most recent chunk via `GET /api/topics/{name}/posts/chunk`
+3. **Scroll loading**: As the user scrolls, additional chunks are fetched by year/month
+
+## Legend Response
+
+```json
+{
+  "legend": [
+    { "year": 2026, "month": 3, "count": 15 },
+    { "year": 2026, "month": 2, "count": 28 },
+    { "year": 2026, "month": 1, "count": 12 }
+  ]
+}
+```
+
+## Chunk Request
+
+```
+GET /api/topics/{name}/posts/chunk?year=2026&month=3&sort=desc
+```
+
+Returns posts within that time range, sorted by effective date.
+
+## Cache Layer
+
+`TopicTimelineCache` pre-computes per (tag, post):
+- `effective_date` (resolved from multiple date sources)
+- `post_type`, `platform`, `visibility`
+
+This enables fast chunk queries without complex joins at read time.
+
+## Filtering
+
+Both legend and chunk endpoints support:
+- `topic_filter`: Filter by related topics
+- `type_filter`: Filter by post type or platform
+- `creator_filter` / `exclude_creator_filter`: Filter by creator
+- `sort`: `asc` or `desc` by date

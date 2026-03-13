@@ -1,0 +1,184 @@
+---
+title: "Profiles"
+description: "User profiles, portfolio tabs, and creator stats"
+---
+
+## Overview
+
+All user profiles are public. Profile endpoints return creator information, portfolio tabs, topic statistics, and curated content. Authenticated endpoints allow users to update their own profile.
+
+---
+
+## Public Endpoints
+
+### Get Profile
+
+```
+GET /api/profile/{username}
+```
+
+Returns a user's public profile.
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "username": "johndoe",
+  "bio": "Pickleball analyst and content creator",
+  "avatar_url": "https://...",
+  "banner_url": "https://...",
+  "location": "Austin, TX",
+  "twitter_url": "https://x.com/johndoe",
+  "youtube_url": null,
+  "favorite_teams": ["PPA Tour"],
+  "primary_topic_name": "pickleball",
+  "post_count": 45,
+  "created_at": "2025-08-15T00:00:00Z"
+}
+```
+
+---
+
+### Profile Overview
+
+```
+GET /api/profile/{username}/overview
+```
+
+Returns summary statistics for a creator's profile page.
+
+**Response:**
+```json
+{
+  "total_influence": 1250,
+  "index_count": 8,
+  "top_topic_ranks": [
+    { "topic": "ben-johns", "rank": 3 },
+    { "topic": "pickleball", "rank": 12 }
+  ]
+}
+```
+
+---
+
+### Topic Stats
+
+```
+GET /api/profile/{username}/topic-stats
+```
+
+Returns the user's statistics broken down by topic (post counts, engagement per topic).
+
+---
+
+### Curations
+
+```
+GET /api/profile/{username}/curations
+```
+
+Returns content the user has curated (tagged canonical posts to topics).
+
+---
+
+### Portfolio Tabs
+
+```
+GET /api/profile/{username}/portfolio-tabs
+```
+
+Returns the user's portfolio tabs (pinned collections, timelines, etc.).
+
+---
+
+### Top Creators
+
+```
+GET /api/profile/top/creators?limit=10
+```
+
+Returns top creators ranked by post count.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Number of creators (5–50) |
+
+---
+
+### Creators List
+
+```
+GET /api/profile/creators?limit=20
+```
+
+Returns a list of creators with avatars for display in browse views.
+
+---
+
+## Authenticated Endpoints
+
+### Update Profile
+
+```
+PUT /api/profile/me
+```
+
+<Note>Requires authentication.</Note>
+
+**Body:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `username` | string | Update username |
+| `bio` | string | Profile bio |
+| `avatar_url` | string | Avatar image URL |
+| `banner_url` | string | Banner image URL |
+| `location` | string | Location text |
+| `twitter_url` | string | Twitter/X profile URL |
+| `youtube_url` | string | YouTube channel URL |
+| `instagram_url` | string | Instagram profile URL |
+| `favorite_teams` | array | Favorite teams list |
+
+---
+
+### Upload Avatar
+
+```
+POST /api/profile/me/avatar
+```
+
+<Note>Requires authentication.</Note>
+
+Upload a new profile avatar. Accepts image file via multipart form data.
+
+---
+
+### Set Primary Topic
+
+```
+PUT /api/profile/me/primary-topic
+```
+
+<Note>Requires authentication.</Note>
+
+Sets the user's primary topic affiliation.
+
+**Body:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `topic_name` | string | Topic name to set as primary |
+
+---
+
+### Portfolio Tab Management
+
+```
+POST /api/profile/me/portfolio-tabs           # Create tab
+PUT  /api/profile/me/portfolio-tabs/reorder    # Reorder tabs
+DELETE /api/profile/me/portfolio-tabs/{tab_id} # Delete tab
+POST /api/profile/me/portfolio-tabs/{post_id}/pin    # Pin post
+POST /api/profile/me/portfolio-tabs/{tab_id}/unpin   # Unpin tab
+```
+
+<Note>All require authentication.</Note>

@@ -1,6 +1,64 @@
 ---
-title: "Coming Soon"
-description: "This section is under development"
+title: "Developer Documentation"
+description: "Build on the Sports Index platform with our public APIs"
 ---
 
-This documentation is coming soon. Check back later for updates.
+Sports Index provides a set of public REST APIs for accessing sports content, topics, creator profiles, statistics, and more. These APIs power the Sports Index web application and are available for third-party integrations.
+
+## Base URL
+
+All API endpoints are relative to:
+
+```
+https://sportsindex.app
+```
+
+## Response Format
+
+All endpoints return JSON. Successful responses return `200 OK` with the response body. Errors return appropriate HTTP status codes with a `detail` field:
+
+```json
+{
+  "detail": "Post not found"
+}
+```
+
+## Authentication
+
+Most read endpoints are **public** and require no authentication. Endpoints that benefit from authentication (e.g., returning personalized data) accept an optional `Authorization` header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+See the [Authentication](/dev/api/authentication) page for details on obtaining tokens.
+
+## Rate Limiting
+
+Public endpoints are rate-limited to prevent abuse. If you exceed the limit, you'll receive a `429 Too Many Requests` response. Current limits:
+
+- **Unauthenticated**: 60 requests/minute
+- **Authenticated**: 120 requests/minute
+
+## Available APIs
+
+<Cards>
+  <Card title="Content Posts" icon="file" href="/dev/api/content-posts">
+    Retrieve posts by slug or ID, search content, browse feeds.
+  </Card>
+  <Card title="Topics" icon="hashtag" href="/dev/api/topics">
+    Browse topic pages, query topic feeds, search topics.
+  </Card>
+  <Card title="Explore & Discovery" icon="compass" href="/dev/api/explore">
+    Featured content, trending topics, sport/league browsing.
+  </Card>
+  <Card title="Profiles" icon="user" href="/dev/api/profiles">
+    Creator profiles, portfolio tabs, stats, and curations.
+  </Card>
+  <Card title="Pickleball Stats" icon="table-tennis-paddle-ball" href="/dev/api/stats">
+    Player stats, match history, head-to-head, leaderboards.
+  </Card>
+  <Card title="Leaderboard" icon="trophy" href="/dev/api/leaderboard">
+    Creator, topic, and post rankings with engagement data.
+  </Card>
+</Cards>
