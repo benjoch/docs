@@ -6,11 +6,6 @@
     "light": "#00A8FF",
     "dark": "#00A8FF"
   },
-  "background": {
-    "color": {
-      "dark": "#1a1c22"
-    }
-  },
   "appearance": {
     "default": "dark"
   },
@@ -18,15 +13,18 @@
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/favicon.svg",
   "navbar": {
     "links": [
-      { "label": "Sports Index", "href": "https://sportsindex.io" }
+      {
+        "label": "Sports Index",
+        "href": "https://sportsindex.io"
+      }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://sportsindex.io/signup"
+      "href": "https://sportsindex.io/explore"
     }
   },
   "footer": {
@@ -46,51 +44,23 @@
             "icon": "rocket",
             "pages": [
               "guide/introduction",
-              "guide/create-account",
-              "guide/quick-start"
+              "guide/quick-start",
+              "guide/create-account"
             ]
           },
           {
-            "group": "Portfolio Pages",
+            "group": "The Index",
+            "icon": "chart-line",
+            "pages": [
+              "guide/methodology"
+            ]
+          },
+          {
+            "group": "Athlete & Team Pages",
             "icon": "user",
             "pages": [
-              "guide/portfolio/overview",
-              "guide/portfolio/profile-settings",
-              "guide/portfolio/importing-content",
-              "guide/portfolio/library",
-              "guide/portfolio/timelines",
-              "guide/portfolio/collections"
-            ]
-          },
-          {
-            "group": "Topic Pages",
-            "icon": "hashtag",
-            "pages": [
               "guide/topics/overview",
-              "guide/topics/claiming",
-              "guide/topics/custom-tabs",
-              "guide/topics/community",
-              "guide/topics/managing-content"
-            ]
-          },
-          {
-            "group": "Collection Editor",
-            "icon": "grid-2",
-            "pages": [
-              "guide/editor/overview",
-              "guide/editor/block-types",
-              "guide/editor/templates",
-              "guide/editor/embeds-media",
-              "guide/editor/stats-charts"
-            ]
-          },
-          {
-            "group": "Help",
-            "icon": "circle-question",
-            "pages": [
-              "guide/help/faq",
-              "guide/help/supported-platforms",
-              "guide/help/troubleshooting"
+              "guide/topics/claiming"
             ]
           }
         ]
@@ -119,14 +89,11 @@
             "group": "API Reference",
             "pages": [
               "dev/api/authentication",
-              "dev/api/content-posts",
               "dev/api/topics",
               "dev/api/explore",
-              "dev/api/profiles",
               "dev/api/stats",
               "dev/api/leaderboard",
-              "dev/api/media",
-              "dev/api/library"
+              "dev/api/content-posts"
             ]
           }
         ]
